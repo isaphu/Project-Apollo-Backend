@@ -4,7 +4,9 @@
     "password": "YLUTJMHGa1",
     "database": "ProjectApollo",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",    
+    "timezone": "+07:00",
+    "logging": false
   },
   "test": {
     "username": "root",

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataType) => {
         }
     })
     uom.associate = (models) => {
-        uom.hasMany(models.products)
+        uom.hasMany(models.product)
     }
     return uom;
 }
