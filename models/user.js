@@ -1,8 +1,5 @@
 module.exports = (sequelize, DataType) => {
     const user = sequelize.define("user", {
-        user_id: {
-            type: DataType.INTEGER
-        },
         firstname: {
             type: DataType.STRING(150)
         },
@@ -32,7 +29,7 @@ module.exports = (sequelize, DataType) => {
         }
     })
     user.associate = (models) => {
-        user.hasMany(models.contact_us, {user_id})
+        user.hasMany(models.contact_us)
     }
     return user;
 }
