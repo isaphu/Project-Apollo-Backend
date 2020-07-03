@@ -4,28 +4,28 @@ module.exports = (sequelize, DataType) => {
             type: DataType.INTEGER
         },
         firstname: {
-            type: DataType.varchar(150)
+            type: DataType.STRING(150)
         },
         lastname: {
-            type: DataType.varchar(150)
+            type: DataType.STRING(150)
         },
         email: {
-            type: DataType.varchar(150)
+            type: DataType.STRING(150)
         },
         phone: {
-            type: DataType.varchar(20)
+            type: DataType.STRING(20)
         },
         login_name: {
-            type: DataType.varchar(150)
+            type: DataType.STRING(150)
         },
         password: {
-            type: DataType.varchar(150)
+            type: DataType.STRING(150)
         },
         admin: {
-            type: DataType.varchar(1)
+            type: DataType.STRING(1)
         },
         register_complete: {
-            type: DataType.varchar(1)
+            type: DataType.STRING(1)
         },
         status: {
             type: DataType.BOOLEAN
