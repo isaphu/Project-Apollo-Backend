@@ -48,7 +48,6 @@ exports.updateUom = async (req,res,next) => {
 
 exports.deleteUom = async (req,res,next) => {
     try {
-        console.log('feee')
         const {id} = req.params
         await db.uom.destroy({where: {id}})
         res.status(204).send()
