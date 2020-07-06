@@ -18,7 +18,7 @@ module.exports = (sequelize, DataType) => {
         password: {
             type: DataType.STRING(150)
         },
-        admin: {
+        isAdmin: {
             type: DataType.STRING(1)
         },
         register_complete: {
