@@ -17,7 +17,7 @@ exports.createUOM = async (req,res,next) => {
             uom_code: code,
             uom_name: name
         })
-        res.status(201).send({ message: 'เพิ่มรายละเอียดหน่วยของสินค้าแล้ว',newUOM})
+        res.status(201).send({ message: 'เพิ่มรายละเอียดหน่วยของสินค้าเรียบร้อย',newUOM})
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
@@ -46,13 +46,17 @@ exports.updateUom = async (req,res,next) => {
             name
         } = req.body
         const checkUom = await db.uom.findOne({ where: { id: id}});
-        if (checkUom === code) {
+        if (checkUom === id) {
             await db.uom.create ({
                 code: name,
                 name: name
             });
             return res.status(200).send({ message: 'อัพเดทรายละเอียดหน่วยของสินค้าเรียบร้อย'});
         } else {
+            const {
+                code,
+                name
+            } = req.body;
             await db.uom.create ({
                 code: code,
                 name: name
