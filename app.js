@@ -3,15 +3,16 @@ const app = express();
 const cors = require('cors');
 const db = require('./models');
 const bodyParser = require('body-parser');
-const productRouter = require('./routes/product')
-const uomRouter = require('./routes/uom')
+const productRouter = require('./routes/product');
+const uomRouter = require('./routes/uom');
+const userRouter = require('./routes/user');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use('/product', productRouter);
 app.use('/uom', uomRouter )
-
+app.use('/user', userRouter)
 
 
 app.all('*',(req,res,next) => {
