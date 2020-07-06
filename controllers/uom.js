@@ -8,7 +8,7 @@ exports.createUOM = async (req,res,next) => {
             name
         } = req.body
         if(!code) {
-            return res.status(400).send({ message: 'กรุณากรอกรหัสหน่วนสินค้า'})
+            return res.status(400).send({ message: 'กรุณากรอกรหัสหน่วยสินค้า'})
         }
         if (!name) {
             return res.status(400).send({ message: 'กรุณากรอกชื่อหน่วยสินค้า'})
@@ -42,7 +42,21 @@ exports.updateUom = async (req,res,next) => {
     try {
         const {id} = req.params
         const {
-            
+            code,
+            name
+        } = req.body
+        const checkUom = await db.uom.findOne({ where: { id: id}});
+        if (checkUom === code) {
+            await db.uom.create ({
+                code: name,
+                name: name
+            });
+            return res.status(200).send({ message: 'อัพเดทรายละเอียดหน่วยของสินค้าเรียบร้อย'});
+        } else {
+            await db.uom.create ({
+                code: code,
+                name: name
+            })
         }
     } catch(err) {
         res.status(500).send({ message: err.message})

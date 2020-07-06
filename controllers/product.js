@@ -11,13 +11,13 @@ exports.createProduct = async (req, res, next) => {
          uomExportId
         } = req.body;
         if (!code) {
-            return res.status(400).send({ message: 'product code is required'})
+            return res.status(400).send({ message: 'กรุณากรอกรหัสสินค้า'})
         }
         if (!name) {
-            return res.status(400).send({ message: 'name of the product is required'})
+            return res.status(400).send({ message: 'กรุณากรอกชื่อสินค้า'})
         } 
         if (!details) {
-            return res.status(400).send({ message: 'details is required'})
+            return res.status(400).send({ message: 'กรุณากรอกรายละเอียดของสินค้า'})
         }
      const newProduct = await db.product.create({
         product_code: code,
@@ -27,12 +27,18 @@ exports.createProduct = async (req, res, next) => {
         uomExportId,
         uomImportId
      })
-      res.status(201).send({ message: 'product has been added'}) 
+      res.status(201).send({ message: 'สินค้าได้ถูกเพิ่มแล้ว'}) 
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
 } 
 
-exports.getProduct = () => {}
+exports.getProduct = async (req, res, next) => {
+    const uom = await db.uom.findAll( {attributes: ['id', 'product_code', 'product_name', 'product_detail']})
+    res.status(200).send({ uom })
+}
+
+
+
 exports.updateProduct = () => {}
 exports.deleteProduct =() => {}
