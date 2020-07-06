@@ -8,16 +8,16 @@ exports.createUOM = async (req,res,next) => {
             name
         } = req.body
         if(!code) {
-            return res.status(400).send({ message: 'UOM code is required'})
+            return res.status(400).send({ message: 'กรุณากรอกรหัสหน่วนสินค้า'})
         }
         if (!name) {
-            return res.status(400).send({ message: 'UOM name is required'})
+            return res.status(400).send({ message: 'กรุณากรอกชื่อหน่วยสินค้า'})
         }
         const newUOM = await db.uom.create ({
             uom_code: code,
             uom_name: name
         })
-        res.status(201).send({ message: 'UOM has been created',newUOM})
+        res.status(201).send({ message: 'เพิ่มรายละเอียดหน่วยของสินค้าแล้ว',newUOM})
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
@@ -40,7 +40,10 @@ exports.getUom = async (req,res,next) => {
 
 exports.updateUom = async (req,res,next) => {
     try {
-        
+        const {id} = req.params
+        const {
+            
+        }
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
