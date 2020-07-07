@@ -19,3 +19,5 @@ router.delete('./', adminController.deleteComData)
 router.post('/', adminController.createShipper)
 router.put('/', adminController.updateShipper)
 router.delete('./', adminController.deleteShipper)
+
+module.exports = admin;

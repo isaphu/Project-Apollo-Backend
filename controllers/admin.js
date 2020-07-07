@@ -1,5 +1,5 @@
 const db = require('../models');
-
+const jwtDecode = require('jwt-decode');
 //user and setting management 
 
 exports.listAllUser = () => {}
@@ -11,9 +11,19 @@ exports.createUser = (req, res, next) => {
         phone,
         login_name,
         password,
+        isAdmin,
+        register_complete,
+        status
+    } = req.body;
 
-    }
+
 }
+
+
+
+
+
+
 exports.updateUser = () => {}
 exports.resetUserPassword = () => {}
 
