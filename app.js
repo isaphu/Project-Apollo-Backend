@@ -6,13 +6,19 @@ const bodyParser = require('body-parser');
 const productRouter = require('./routes/product');
 const uomRouter = require('./routes/uom');
 const userRouter = require('./routes/user');
+const adminRouter = require('./routes/')
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use('/product', productRouter);
-app.use('/uom', uomRouter )
-app.use('/user', userRouter)
+app.use('/uom', uomRouter );
+app.use('/user', userRouter);
+app.use('/admin',adminRouter);
+
+
+
+
 
 
 app.all('*',(req,res,next) => {
