@@ -31,16 +31,22 @@ exports.createProduct = async (req, res, next) => {
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
-} 
+};
 
-exports.getProduct = async (req, res, next) => {
+exports.getAllProduct = async (req, res, next) => {
     const product = await db.product.findAll( {attributes: ['id', 'product_code', 'product_name', 'product_detail']})
     res.status(200).send({ product })
-}
+};
 
-exports.getAllProduct = async (re,res.next) => {
-
-}
+exports.getProduct = async (req,res,next) => {
+    try {
+        const {id} = req.params;
+        const product = await db.product.findOne({where: {id}})
+        res.status(200).send({ product })
+    } catch(err) {
+        res.status(500).send({message: err.message})
+    }
+};
 
 exports.updateProduct = async (req,res,next) => {
     try {
@@ -83,14 +89,15 @@ exports.updateProduct = async (req,res,next) => {
     } catch(err) {
         res.status(500).send({ message: err.message})
     }
-}
+};
 
 
-exports.deleteProduct = async (req, res, next) => {}
-        try {
-            const {id} = req.params
-            await db.product.destroy({ where: {id}})
-            res.status(200).send()
-        } catch (err) {
-            res.status(500).send({ message: err.message })
-        }
+exports.deleteProduct = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        await db.product.destroy({ where: {id}})
+        res.status(200).send()
+    } catch (err) {
+        res.status(500).send({ message: err.message })
+    }
+};
