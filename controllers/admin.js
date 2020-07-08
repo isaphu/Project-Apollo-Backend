@@ -46,7 +46,6 @@ exports.createUser = (req, res, next) => {
     }
 };
 
-
 exports.updateUser = (req, res, next) => {
     try {
         const {
@@ -70,8 +69,7 @@ exports.updateUser = (req, res, next) => {
     } catch(err) {
         res.status(401).send({message:'Unauthorize Request!', err})
     }
-
-}
+};
 
 exports.resetUserPassword = () => {
     try {
@@ -89,7 +87,7 @@ exports.resetUserPassword = () => {
     } catch(err) {
         res.status(401).send({message: 'Unauthorize Request!', err})
     }
-}
+};
 
 //company details 
 
@@ -111,19 +109,84 @@ exports.createComDetails = () => {
             create_by,
             create_date,
             update_by,
-            update_dat
+            update_date
         } = req.body;
-
-
+        db.user.findOne({where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser => {
+            if (requestUser.isAdmin) {
+                db.company.update({
+                    com_code,
+                    com_name_th,
+                    come_name_en,
+                    address,
+                    phone,
+                    fax,
+                    email,
+                    manager_name,
+                    bank_account_no,
+                    bank_account_name,
+                    bank_account_branch,
+                    tax_no,
+                    create_by,
+                    create_date,
+                    update_by,
+                    update_date
+                }).then(result => res.status(200).send({message: 'Company details has been created!'}))
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
     } catch(err) {
         res.status(401).send({message: 'Unauthorize Request!', err})
     }
-}
+};
 
-
-
-
-exports.updateComDetails = () => {}
+exports.updateComDetails = () => {
+    try {
+        const {
+            id,
+            com_code,
+            com_name_th,
+            come_name_en,
+            address,
+            phone,
+            fax,
+            email,
+            manager_name,
+            bank_account_no,
+            bank_account_name,
+            bank_account_branch,
+            tax_no,
+            create_by,
+            create_date,
+            update_by,
+            update_date
+        } = req.body;
+        db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser => {
+            if(requestUser.isAdmin) {
+                db.company.update({
+                    com_code,
+                    com_name_th,
+                    come_name_en,
+                    address,
+                    phone,
+                    fax,
+                    email,
+                    manager_name,
+                    bank_account_no,
+                    bank_account_name,
+                    bank_account_branch,
+                    tax_no,
+                    create_by,
+                    create_date,
+                    update_by,
+                    update_date
+                }, {where: {id}}).then(result => res.status(200).send({message: 'Company details has been updated!'}))
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
+    } catch(err) {
+        res.status(401).send({message: 'Unauthorize Request!', err})
+    }
+};
 exports.deleteComDetails = () => {}
 exports.deleteComData = () => {}
 
@@ -134,11 +197,19 @@ exports.createShipper = () => {
             shipper_code,
             shipper_name
         } = req.body;
-
+        db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser=> {
+            if (requestUser.isAdmin) {
+                db.shipper.create({
+                    shipper_code,
+                    shipper_name
+                }).then(result => res.status(200).send({message: 'Shipper has been created!'}))
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
     } catch(err) {
         res.status(401).send({message: 'Unauthorize Request!', err})
     }
-}
+};
 
 
 
