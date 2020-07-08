@@ -21,6 +21,9 @@ module.exports = (sequelize, DataType) => {
         isAdmin: {
             type: DataType.STRING(1)
         },
+        isUser: {
+            type: DataType.STRING(1)
+        },
         register_complete: {
             type: DataType.STRING(1)
         },
