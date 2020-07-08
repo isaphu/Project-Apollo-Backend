@@ -3,8 +3,7 @@ const jwtDecode = require('jwt-decode');
 const { request } = require('express');
 
 
-//user and setting management 
-
+// user and setting management 
 exports.listAllUser = (req,res,next) => {
     try {
         db.user.findOne({ where: jwtDecode(JSON.stringify(req.headers/authorization)).login_name})
@@ -16,7 +15,7 @@ exports.listAllUser = (req,res,next) => {
             } else res.status(401).send({message:'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({ message: 'Unauthorize Request!', err})
+        res.status(401).send({ message: 'Unauthorize Request!'})
     }
 };
 
@@ -42,7 +41,7 @@ exports.createUser = (req, res, next) => {
             } else res.status(401).send({ message: 'Unauthorize Request!'})   
         })
     } catch(err) {
-        res.status(401).send({ message: 'Unauthorize Request!', err});
+        res.status(401).send({ message: 'Unauthorize Request!'});
     }
 };
 
@@ -67,7 +66,7 @@ exports.updateUser = (req, res, next) => {
                 } else res.status(401).send({message:'Unauthorize request!'})
             })
     } catch(err) {
-        res.status(401).send({message:'Unauthorize Request!', err})
+        res.status(401).send({message:'Unauthorize Request!'})
     }
 };
 
@@ -85,12 +84,11 @@ exports.resetUserPassword = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: 'Unauthorize Request!', err})
+        res.status(401).send({message: 'Unauthorize Request!'})
     }
 };
 
-//company details 
-
+// company details 
 exports.createComDetails = (req,res,next) => {
     try {
         const {
@@ -135,7 +133,7 @@ exports.createComDetails = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: 'Unauthorize Request!', err})
+        res.status(401).send({message: 'Unauthorize Request!'})
     }
 };
 
@@ -184,17 +182,19 @@ exports.updateComDetails = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: 'Unauthorize Request!', err})
+        res.status(401).send({message: 'Unauthorize Request!'})
     }
 };
+
 exports.deleteComDetails = async (req,res,next) => {
     const {id} = req.params;
     await db.company.destroy({where: {id}});
     res.status(200).send({message: 'Delete Completed'})
 };
-exports.deleteComData = async (req,res,next) => {
-    const {id}
-}
+
+// exports.deleteComData = async (req,res,next) => {
+//     const {id}
+// }
 
 //adding shipper
 exports.createShipper = (req,res,next) => {
@@ -213,7 +213,7 @@ exports.createShipper = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: 'Unauthorize Request!', err})
+        res.status(401).send({message: 'Unauthorize Request!'})
     }
 };
 
@@ -234,7 +234,7 @@ exports.updateShipper = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: 'Unauthorize Request!', err})
+        res.status(401).send({message: 'Unauthorize Request!'})
     }
 
 };
@@ -245,8 +245,7 @@ exports.deleteShipper = async (req,res,next) => {
     res.status(200).send({message: 'Delete Completed'})
 };
 
-//update contact_us and about
-
+// update contact_us and about
 exports.updateAbout = (req,res,next) => {
     try {
         const {
@@ -263,7 +262,7 @@ exports.updateAbout = (req,res,next) => {
             } else res.status(401).send({message: 'Unauthorize Request!'})
         })
     } catch(err) {
-        res.status(401).send({message: err})
+        res.status(401).send({message: err.me})
     } 
 };
 
