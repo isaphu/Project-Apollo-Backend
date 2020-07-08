@@ -20,4 +20,8 @@ router.post('/', adminController.createShipper)
 router.put('/', adminController.updateShipper)
 router.delete('./', adminController.deleteShipper)
 
+//contact_us
+router.post('/', adminController.updateAbout)
+router.post('/', adminController.updateContact)
+
 module.exports = admin;
