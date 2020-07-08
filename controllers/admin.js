@@ -187,8 +187,14 @@ exports.updateComDetails = (req,res,next) => {
         res.status(401).send({message: 'Unauthorize Request!', err})
     }
 };
-exports.deleteComDetails = () => {}
-exports.deleteComData = () => {}
+exports.deleteComDetails = async (req,res,next) => {
+    const {id} = req.params;
+    await db.company.destroy({where: {id}});
+    res.status(200).send({message: 'Delete Completed'})
+};
+exports.deleteComData = async (req,res,next) => {
+    const {id}
+}
 
 //adding shipper
 exports.createShipper = (req,res,next) => {
@@ -233,6 +239,8 @@ exports.updateShipper = (req,res,next) => {
 
 };
 
-exports.deleteShipper = (req,res,next) => {
-    
-}
+exports.deleteShipper = async (req,res,next) => {
+    const {id} = req.params;
+    await db.shipper.destroy({ where: {id}});
+    res.status(200).send({message: 'Delete Completed'})
+};
