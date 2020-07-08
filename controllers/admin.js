@@ -71,7 +71,7 @@ exports.updateUser = (req, res, next) => {
     }
 };
 
-exports.resetUserPassword = () => {
+exports.resetUserPassword = (req,res,next) => {
     try {
         const {
             login_name,
@@ -91,7 +91,7 @@ exports.resetUserPassword = () => {
 
 //company details 
 
-exports.createComDetails = () => {
+exports.createComDetails = (req,res,next) => {
     try {
         const {
             com_code,
@@ -139,7 +139,7 @@ exports.createComDetails = () => {
     }
 };
 
-exports.updateComDetails = () => {
+exports.updateComDetails = (req,res,next) => {
     try {
         const {
             id,
@@ -191,14 +191,14 @@ exports.deleteComDetails = () => {}
 exports.deleteComData = () => {}
 
 //adding shipper
-exports.createShipper = () => {
+exports.createShipper = (req,res,next) => {
     try {
         const {
             shipper_code,
             shipper_name
         } = req.body;
         db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
-        .then(requestUser=> {
+        .then(requestUser => {
             if (requestUser.isAdmin) {
                 db.shipper.create({
                     shipper_code,
@@ -211,8 +211,28 @@ exports.createShipper = () => {
     }
 };
 
+exports.updateShipper = (req,res,next) => {
+    try {
+        const {
+            id,
+            shipper_code,
+            shipper_name
+        } = req.body;
+        db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser => {
+            if (requestUser.isAdmin) {
+                db.shipper.update({
+                    shipper_code,
+                    shipper_name
+                }, {where: {id}}).then(result => res.status(200).send({message: 'Shipper has been update'}))
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
+    } catch(err) {
+        res.status(401).send({message: 'Unauthorize Request!', err})
+    }
 
+};
 
-
-exports.updateShipper = () => {}
-exports.deleteShipper = () => {}
+exports.deleteShipper = (req,res,next) => {
+    
+}
