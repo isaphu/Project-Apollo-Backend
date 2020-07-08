@@ -236,7 +236,6 @@ exports.updateShipper = (req,res,next) => {
     } catch(err) {
         res.status(401).send({message: 'Unauthorize Request!'})
     }
-
 };
 
 exports.deleteShipper = async (req,res,next) => {
