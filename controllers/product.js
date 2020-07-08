@@ -38,6 +38,9 @@ exports.getProduct = async (req, res, next) => {
     res.status(200).send({ product })
 }
 
+exports.getAllProduct = async (re,res.next) => {
+
+}
 
 exports.updateProduct = async (req,res,next) => {
     try {
