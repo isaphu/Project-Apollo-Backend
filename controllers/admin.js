@@ -244,3 +244,46 @@ exports.deleteShipper = async (req,res,next) => {
     await db.shipper.destroy({ where: {id}});
     res.status(200).send({message: 'Delete Completed'})
 };
+
+//update contact_us and about
+
+exports.updateAbout = (req,res,next) => {
+    try {
+        const {
+            title,
+            content
+        } = req.body;
+        db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser => {
+            if (requestUser.isAdmin) {
+                db.about.update({
+                    title,
+                    content
+                }, {where: {}}).then(result => res.status(200).send({message: 'About has been updated!'}))
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
+    } catch(err) {
+        res.status(401).send({message: err})
+    } 
+};
+
+exports.updateContact = (req,res,next) => {
+    try {
+        const {
+            line,
+            email
+        } = req.body;
+        db.user.findOne({ where: {login_name: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        .then(requestUser => {
+            if (requestUser.isAdmin) {
+                db.contact_us.update({
+                    line,
+                    email
+                }, {where: {}}).then(result => res.status(200).send({message: 'Contact us has been updated!'}))    
+            } else res.status(401).send({message: 'Unauthorize Request!'})
+        })
+    } catch(err) {
+        res.status(401).send({message: err})
+    }
+};
+
