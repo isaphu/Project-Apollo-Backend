@@ -91,16 +91,57 @@ exports.resetUserPassword = () => {
     }
 }
 
-
-
 //company details 
 
-exports.createComDetails = () => {}
+exports.createComDetails = () => {
+    try {
+        const {
+            com_code,
+            com_name_th,
+            come_name_en,
+            address,
+            phone,
+            fax,
+            email,
+            manager_name,
+            bank_account_no,
+            bank_account_name,
+            bank_account_branch,
+            tax_no,
+            create_by,
+            create_date,
+            update_by,
+            update_dat
+        } = req.body;
+
+
+    } catch(err) {
+        res.status(401).send({message: 'Unauthorize Request!', err})
+    }
+}
+
+
+
+
 exports.updateComDetails = () => {}
 exports.deleteComDetails = () => {}
 exports.deleteComData = () => {}
 
 //adding shipper
-exports.createShipper = () => {}
+exports.createShipper = () => {
+    try {
+        const {
+            shipper_code,
+            shipper_name
+        } = req.body;
+
+    } catch(err) {
+        res.status(401).send({message: 'Unauthorize Request!', err})
+    }
+}
+
+
+
+
 exports.updateShipper = () => {}
 exports.deleteShipper = () => {}
