@@ -1,5 +1,5 @@
 const db = require('../models');
-const jwtDecode = require('jwt-decode');
+const jwtDecode = require('jsonwebtoken');
 const { request } = require('express');
 
 
@@ -87,6 +87,8 @@ exports.resetUserPassword = (req,res,next) => {
         res.status(401).send({message: 'Unauthorize Request!'})
     }
 };
+
+exports.deleteUser = () => {};
 
 // company details 
 exports.createComDetails = (req,res,next) => {

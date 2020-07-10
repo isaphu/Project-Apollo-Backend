@@ -1,5 +1,8 @@
 const db = require('../models');
 const { response } = require('express');
+const { Op } =require('sequelize');
+
+
 
 exports.createProduct = async (req, res, next) => {
     try {
@@ -34,8 +37,54 @@ exports.createProduct = async (req, res, next) => {
 };
 
 exports.getAllProduct = async (req, res, next) => {
-    const product = await db.product.findAll( {attributes: ['id', 'product_code', 'product_name', 'product_detail']})
-    res.status(200).send({ product })
+    try {
+        const {
+            product_code,
+            product_name,
+            product_detail
+        } = req.query;
+
+        let defaultQueryObject = {
+            attributes: ['id', 'product_code', 'product_name', 'product_detail']
+        }
+
+        let productNameQueryObj = {};
+        let productCodeQueryObj = {};
+
+        if (product_name) {
+            productNameQueryObj.product_name = {
+                [Op.like]: '%' + product_name + '%'
+            }        
+        }
+
+        if (product_code) {
+            productCodeQueryObj.product_code = product_code                
+        }        
+
+        let resultQueryObject = {...productNameQueryObj, ...productCodeQueryObj}
+        let whereObj = {}
+        
+        let hasKey = false;
+
+        for (let key in resultQueryObject) {
+            hasKey =true;
+            break;
+        }
+
+        if (hasKey) {
+            whereObj.where = resultQueryObject;
+        }
+
+        const resultQueryObj = {...defaultQueryObject, ...whereObj}
+
+        console.log(resultQueryObj)
+
+        product = await db.product.findAll(resultQueryObj)
+        
+        res.status(200).send({ product })
+    } catch(err) {
+        res.status(500).send({message: err.message})
+    }
 };
 
 exports.getProduct = async (req,res,next) => {

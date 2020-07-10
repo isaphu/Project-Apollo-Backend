@@ -13,7 +13,7 @@ router.delete('./', adminController.deleteUser)
 router.post('/', adminController.createComDetails)
 router.put('./', adminController.updateComDetails)
 router.delete('./', adminController.deleteComDetails)
-router.delete('./', adminController.deleteComData)
+// router.delete('./', adminController.deleteComData)
 
 //adding shipper 
 router.post('/', adminController.createShipper)
@@ -24,4 +24,4 @@ router.delete('./', adminController.deleteShipper)
 router.post('/', adminController.updateAbout)
 router.post('/', adminController.updateContact)
 
-module.exports = admin;
+module.exports = router;

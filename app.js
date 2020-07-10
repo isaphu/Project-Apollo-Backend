@@ -6,9 +6,9 @@ const bodyParser = require('body-parser');
 const productRouter = require('./routes/product');
 const uomRouter = require('./routes/uom');
 const userRouter = require('./routes/user');
-const adminRouter = require('./routes/');
+const adminRouter = require('./routes/admin');
 const import_exportRouter = require('./routes/import_export');
-
+// const accountingRouter = require('./routes/accounting');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -16,12 +16,9 @@ app.use(express.urlencoded({extended:false}));
 app.use('/product', productRouter);
 app.use('/uom', uomRouter );
 app.use('/user', userRouter);
-app.use('/admin',adminRouter);
-app.use('/import_export',import_exportRouter);
-
-
-
-
+app.use('/admin', adminRouter);
+app.use('/import_export', import_exportRouter);
+// app.use('/accouting', accountingRouter);
 
 
 app.all('*',(req,res,next) => {

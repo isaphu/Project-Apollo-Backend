@@ -1,5 +1,8 @@
 module.exports = (sequelize, DataType) => {
     const export_entry = sequelize.define("export_entry",{
+        export_entry: {
+            type: DataType.STRING
+        },
         releasing_date: {
             type: DataType.DATE
         },

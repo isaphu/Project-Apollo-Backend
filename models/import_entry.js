@@ -1,5 +1,8 @@
 module.exports = (sequelize, DataType) => {
     const import_entry = sequelize.define("import_entry", {
+        import_entry: {
+            type: DataType.STRING
+        },
         arriving_date: {
             type: DataType.DATE
         },
@@ -11,7 +14,8 @@ module.exports = (sequelize, DataType) => {
         },
         releasing_no: {
             type: DataType.STRING(15)
-        }
+        },
+
     });
     import_entry.associate = (models) => {
         import_entry.belongsTo(models.shipper)
