@@ -8,14 +8,12 @@ exports.login = async (req,res,next) => {
     const {
         login_name,
         password, 
-        role
     } = req.body;
     try {
         const userInfo = await db.user.findOne({ where: { login_name }});
         const isValidUser =
          userInfo && 
             bcryptjs.compareSync(password, userInfo.password)
-            // ((userInfo.isAdmin && role == "admin") || (userInfo.isUser && role == "user"));
         if (!isValidUser) {
            res.status(400).send('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         } else {

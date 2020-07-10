@@ -2,8 +2,6 @@ const db = require('../models');
 const { response } = require('express');
 const { Op } =require('sequelize');
 
-
-
 exports.createProduct = async (req, res, next) => {
     try {
      const {
@@ -109,32 +107,17 @@ exports.updateProduct = async (req,res,next) => {
         } = req.body
         const checkProduct = await db.product.findOne({ where: {id: id}})
         if (checkProduct === id) {
-            await db.product.create ({
+            await db.product.update ({
                 product_code: code,
                 product_name: name,
                 product_detail: details,
                 status: true,
                 uomExportId,
                 uomImportId
-            });
+            }, {where: {id}});
             return res.status(200).send({ message: 'อัพเดทสินค้าเรียบร้อย'})
-        } else {
-            const {
-                code,
-                name,
-                details,
-                uomImportId,
-                uomExportId
-            } = req.body
-            await db.product.create ({
-                product_code: code,
-                product_name: name,
-                product_detail: details,
-                status: true,
-                uomExportId,
-                uomImportId
-            })
-        }
+        } 
+        res.status(400).send({ message: 'Product with this ID is not found'})
     } catch(err) {
         res.status(500).send({ message: err.message})
     }

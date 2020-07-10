@@ -46,22 +46,14 @@ exports.updateUom = async (req,res,next) => {
             name
         } = req.body
         const checkUom = await db.uom.findOne({ where: { id: id}});
-        if (checkUom === id) {
-            await db.uom.create ({
+        if (checkUom) {
+            await db.uom.update ({
                 code: name,
                 name: name
-            });
+            }, {where: {id}});
             return res.status(200).send({ message: 'อัพเดทรายละเอียดหน่วยของสินค้าเรียบร้อย'});
-        } else {
-            const {
-                code,
-                name
-            } = req.body;
-            await db.uom.create ({
-                code: code,
-                name: name
-            })
-        }
+        } 
+        res.status(400).send({ message: 'UOM with this ID is not found'})
     } catch(err) {
         res.status(500).send({ message: err.message})
     }

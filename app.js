@@ -5,20 +5,21 @@ const db = require('./models');
 const bodyParser = require('body-parser');
 const productRouter = require('./routes/product');
 const uomRouter = require('./routes/uom');
-const userRouter = require('./routes/user');
+const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
-const import_exportRouter = require('./routes/import_export');
-// const accountingRouter = require('./routes/accounting');
+const importRouter = require('./routes/import');
+const exportRouter = require('./routes/export');
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use('/product', productRouter);
 app.use('/uom', uomRouter );
-app.use('/user', userRouter);
+app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
-app.use('/import_export', import_exportRouter);
-// app.use('/accouting', accountingRouter);
+app.use('/import', importRouter);
+app.use('/export', exportRouter);
 
 
 app.all('*',(req,res,next) => {
