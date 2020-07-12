@@ -1,5 +1,6 @@
 const db = require('../models');
 const { response } = require('express');
+const { Op } = require('sequelize')
 
 exports.createImportData = async (req, res,next) => {
     try {
@@ -10,21 +11,21 @@ exports.createImportData = async (req, res,next) => {
             warehouse_date,
             releasing_no
         } = req.body;
-                if (!import_entry_number) {
+            if (!import_entry_number) {
                     return res.status(400).send({ message: 'กรุณากรอกเลขที่ใบขน'})
-                }
-                if (!arriving_date) {
+            }
+            if (!arriving_date) {
                     return res.status(400).send({ message: 'กรุณาเลือกวันเรือเข้า'})
-                }
-                if (!releasing_date) {
+            }
+            if (!releasing_date) {
                     return res.status(400).send({ message: 'กรูณาเลือกวันผ่านพิธีการ'})
-                }
-                if (!warehouse_date) {
+            }
+            if (!warehouse_date) {
                     return res.status(400).send({ message: 'กรุณาเลือกวันเข้าคลัง'})
-                }
-                if (!releasing_no) {
+            }
+            if (!releasing_no) {
                     return res.status(400).send({ message: 'กรุณากรอกเลขที่พิธีการ'})
-                }
+            }
         const newImportData = await db.import_entry.create ({
             import_entry: import_entry_number,
             arriving_date,
@@ -41,7 +42,13 @@ exports.createImportData = async (req, res,next) => {
 
 
 
-exports.getAllImportData = () => {};
+exports.getAllImportData = async (req, res, next) => {
+    try {
+
+    } catch(err) {
+        res.status(500).send({ message: err.message })
+    }
+};
 
 
 
