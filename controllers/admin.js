@@ -88,7 +88,15 @@ exports.resetUserPassword = (req,res,next) => {
     }
 };
 
-exports.deleteUser = () => {};
+exports.deleteUser = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        await db.user.destroy({ where: {id}})
+        res.status(200).send({ message: 'User has been deleted!'})
+    } catch(err) {
+        res.status(500).send({ message: err.message})
+    } 
+};
 
 // company details 
 exports.createComDetails = (req,res,next) => {
@@ -194,10 +202,6 @@ exports.deleteComDetails = async (req,res,next) => {
     res.status(200).send({message: 'Delete Completed'})
 };
 
-// exports.deleteComData = async (req,res,next) => {
-//     const {id}
-// }
-
 //adding shipper
 exports.createShipper = (req,res,next) => {
     try {
@@ -287,3 +291,24 @@ exports.updateContact = (req,res,next) => {
     }
 };
 
+//Delate all data
+exports.deleteAllData = async (req,res,next) => {
+    try {
+        const { uom, product, import_entry, export_entry } = req.body;
+        if(uom === 'true' ) {
+            await db.uom.destroy({ truncate: true})
+        }
+        if(product === 'ture') {
+            await db.product.destroy({ truncate: true})
+        } 
+        if(import_entry === 'true') {
+            await db.import_entry.destroy({ truncate: true})
+        }
+        if(export_entry === 'true') {
+            await db.export_entry.destroy({ truncate: true})
+        }
+        res.status(200).send({ message: 'The data you select has been deleted!'})
+    } catch(err) {
+        res.status(500).send({ message: err.message })
+    }
+};

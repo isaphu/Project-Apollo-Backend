@@ -5,8 +5,8 @@ module.exports = (sequelize, DataType) => {
         }
     })
     import_export_related.associate = (models) => {
-        import_export_related.belongsTo(models.import_entry)
-        import_export_related.belongsTo(models.export_entry)
+        // import_export_related.belongsTo(models.import_entry)
+        // import_export_related.belongsTo(models.export_entry)
         import_export_related.belongsTo(models.import_export_related_product)
     }
     return import_export_related;
