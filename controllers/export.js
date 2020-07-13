@@ -57,7 +57,39 @@ exports.getExportData = async (req, res, status) => {
 
 exports.getAllExportData = async (req, res, next) => {
     try {
+        const {
+            export_entry
+        } = req.query;
 
+        let defaultQueryObject = {
+            attributes: ['id', 'export_entry', 'releasing_date','warehouse_date','export_by','departure_date','invoice_no']
+        }
+
+        let exportNumberQueryObj = {};
+
+        if (export_entry) {
+            exportNumberQueryObj.export_entry = export_entry
+        }
+
+        let resultQueryObject = {...exportNumberQueryObj}
+        let whereObj = {}
+
+        let hasKey = false;
+
+        for (let key in resultQueryObject) {
+            hasKey == true;
+            break;
+        }
+
+        if (hasKey) {
+            whereObj.where = resultQueryObject
+        }
+
+        const resultQueryObj = {...defaultQueryObject, ...whereObj}
+
+        export_entry = await db.export_entry.findAll(resultQueryObj)
+        
+        res.status(200).send({ export_entry})
     } catch(err) {
         res.status(500).send({ message: err.message })
     }

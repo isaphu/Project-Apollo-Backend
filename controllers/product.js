@@ -39,7 +39,6 @@ exports.getAllProduct = async (req, res, next) => {
         const {
             product_code,
             product_name,
-            product_detail
         } = req.query;
 
         let defaultQueryObject = {
@@ -65,7 +64,7 @@ exports.getAllProduct = async (req, res, next) => {
         let hasKey = false;
 
         for (let key in resultQueryObject) {
-            hasKey =true;
+            hasKey = true;
             break;
         }
 
