@@ -44,7 +44,39 @@ exports.createImportData = async (req, res,next) => {
 
 exports.getAllImportData = async (req, res, next) => {
     try {
+        const {
+            import_entry
+        } = req.query
 
+        let defaultQueryObject = {
+            attributes: ['id','arriving_date','releasing_date','warehouse_date','releasing_no']
+        }
+
+        let importNumberQueryObj = {};
+
+        if (import_entry) {
+            importNumberQueryObj.import_entry = import_entry
+        }
+
+        let resultQueryObject = {...importNumberQueryObj}
+        let whereObj = {}
+
+        let hasKey = false;
+
+        for (let key in resultQueryObject) {
+            hasKey == true;
+            break;
+        }
+
+        if (hasKey) {
+            whereObj.where = resultQueryObject
+        }
+
+        const resultQueryObj = {...defaultQueryObject, ...whereObj}
+
+        import_entry = await db.import_entry.findAll(resultQueryObj)
+        
+        res.status(200).send({ import_entry })
     } catch(err) {
         res.status(500).send({ message: err.message })
     }
