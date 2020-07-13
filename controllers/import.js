@@ -12,7 +12,7 @@ exports.createImportData = async (req, res,next) => {
             releasing_no
         } = req.body;
             if (!import_entry_number) {
-                    return res.status(400).send({ message: 'กรุณากรอกเลขที่ใบขน'})
+                    return res.status(400).send({ message: 'กรุณากรอกเลขที่ใบขนขาเข้า'})
             }
             if (!arriving_date) {
                     return res.status(400).send({ message: 'กรุณาเลือกวันเรือเข้า'})
@@ -33,7 +33,7 @@ exports.createImportData = async (req, res,next) => {
             warehouse_date,
             releasing_no
         })
-        res.status(201).send({ message: 'ข้อมูลได้ถูกบันทึกแล้ว'})
+        res.status(201).send({ message: 'ข้อมูลใบขนขาเข้าได้ถูกบันทึกแล้ว'})
     } catch(err) {
         res.status(500).send({message: err.message})
     }
@@ -52,7 +52,7 @@ exports.getAllImportData = async (req, res, next) => {
 
 
 
-exports.getImportData = async (req,res,next) => {
+exports.getImportData = async (req, res, next) => {
     try {
         const {id} = req.params;
         const importData = await db.import_entry.findOne({ where: {id}, include: db.shipper})
@@ -63,7 +63,7 @@ exports.getImportData = async (req,res,next) => {
 };
 
 
-exports.updateImportData = async (req,res,next) => {
+exports.updateImportData = async (req, res, next) => {
     try {
         const {id} = req.params
         const {
@@ -90,7 +90,7 @@ exports.updateImportData = async (req,res,next) => {
     }
 };
 
-exports.deleteImportData = async (res, res, next) => {
+exports.deleteImportData = async (req, res, next) => {
     try {
         const { id } = req.params
         await db.import_entry.destroy({ where: {id}})

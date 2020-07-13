@@ -6,8 +6,8 @@ const exportController = require('../controllers/export');
 router.get('/', exportController.getExportData)
 router.get('/:id', exportController.getExportData)
 router.post('/', exportController.createExportData)
-router.put('/', exportController.updateExportData)
-router.delete('/', exportController.deleteExportData)
+router.put('/:id', exportController.updateExportData)
+router.delete('/:id', exportController.deleteExportData)
 
 
 module.exports = router;

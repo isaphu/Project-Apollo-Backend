@@ -3,24 +3,23 @@ const app = express();
 const cors = require('cors');
 const db = require('./models');
 const bodyParser = require('body-parser');
+const adminRouter = require('./routes/admin');
+const authRouter = require('./routes/auth');
+const exportRouter = require('./routes/export');
+const importRouter = require('./routes/import');
 const productRouter = require('./routes/product');
 const uomRouter = require('./routes/uom');
-const authRouter = require('./routes/auth');
-const adminRouter = require('./routes/admin');
-const importRouter = require('./routes/import');
-const exportRouter = require('./routes/export');
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+app.use('/admin', adminRouter);
+app.use('/auth', authRouter);
+app.use('/export', exportRouter);
+app.use('/import', importRouter);
 app.use('/product', productRouter);
 app.use('/uom', uomRouter );
-app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
-app.use('/import', importRouter);
-app.use('/export', exportRouter);
-
 
 app.all('*',(req,res,next) => {
   res.status(404).send({ message: 'route not found'})
