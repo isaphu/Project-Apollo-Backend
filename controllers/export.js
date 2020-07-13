@@ -44,7 +44,61 @@ exports.createExportData = async (req, res, next) => {
 };
 
 
-exports.getExportData = () => {};
-exports.getAllExportData = () => {};
-exports.updateExportData = () => {};
-exports.deleteExportData = () => {};
+exports.getExportData = async (req, res, status) => {
+    try {
+        const {id} = req.params;
+        const exportData = await db.export_entry.findOne({ where: {id}})
+        res.status(200).send({ exportData })
+    } catch(err) {
+        res.status(500).send({ message: err.message})
+    }
+};
+
+
+exports.getAllExportData = async (req, res, next) => {
+    try {
+
+    } catch(err) {
+        res.status(500).send({ message: err.message })
+    }
+};
+
+
+exports.updateExportData = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        const {
+            export_entry_number,
+            releasing_date,
+            warehouse_date,
+            export_by,
+            departure_date,
+            invoice_no
+        } = req.bodyconst 
+        const checkExportData = await db.export_entry.findOne({ where: {id: id}})
+        if (checkExportData === id) {
+            await db.export_entry.update({
+                export_entry: export_entry_number,
+                releasing_date,
+                warehouse_date,
+                export_by,
+                departure_date,
+                invoice_no
+            }, {where: {id}});
+            res.status(200).send({ message: 'Export Entry has been updated!'})
+        } 
+        res.stattus(400).send({ message: 'Export Entry with this ID is not found'})
+    } catch(err) {
+        res.status(500).send({ message: err.message})
+    }
+};
+
+exports.deleteExportData = async (req, res, next) => {
+    try {
+        const {id} = req.params
+        await db.export_entry.destroy({ where: {id}})
+        res.status(200).send()
+    } catch(err) {
+        res.status(500).send({ message: err.message})
+    }
+};
