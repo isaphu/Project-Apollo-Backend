@@ -1,6 +1,6 @@
 const db = require('../models');
 const { response } = require('express');
-const { Op } = require('sequelize')
+const { Op, DATE } = require('sequelize')
 
 exports.createImportData = async (req, res,next) => {
     try {
@@ -45,39 +45,62 @@ exports.createImportData = async (req, res,next) => {
 exports.getAllImportData = async (req, res, next) => {
     try {
         const {
-            import_entry
-        } = req.query
+            import_entry_number,
+            start_date,
+            end_date
+        } = req.query;
 
+        const startDateObj = new Date(start_date)
+        const endDateObj = new Date(end_date)
+        
         let defaultQueryObject = {
             attributes: ['id','arriving_date','releasing_date','warehouse_date','releasing_no']
         }
 
         let importNumberQueryObj = {};
-
-        if (import_entry) {
-            importNumberQueryObj.import_entry = import_entry
+        let startDateQueryObj = {};
+        let endDateQueryObj = {};
+        
+        if (import_entry_number) {
+            importNumberQueryObj.import_entry = import_entry_number
         }
 
-        let resultQueryObject = {...importNumberQueryObj}
+        if (start_date) {
+            startDateQueryObj = {
+                [Op.gte]: startDateObj
+                
+            }
+        }
+        
+        if (end_date) {
+            endDateQueryObj = {
+                [Op.lte]: endDateObj
+            }
+        }
+
+        let arriving_date = {arriving_date: {...startDateQueryObj,...endDateQueryObj}}
+
+        let resultQueryObject = {...importNumberQueryObj,...arriving_date}
+
         let whereObj = {}
 
         let hasKey = false;
-
+       
         for (let key in resultQueryObject) {
-            hasKey == true;
+            hasKey = true;
             break;
         }
-
+        
         if (hasKey) {
             whereObj.where = resultQueryObject
         }
 
         const resultQueryObj = {...defaultQueryObject, ...whereObj}
+        const import_entry = await db.import_entry.findAll(resultQueryObj)
 
-        import_entry = await db.import_entry.findAll(resultQueryObj)
-        
         res.status(200).send({ import_entry })
     } catch(err) {
+        console.log(err)
         res.status(500).send({ message: err.message })
     }
 };
