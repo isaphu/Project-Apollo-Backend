@@ -63,20 +63,20 @@ exports.getAllImportData = async (req, res, next) => {
         
         if (import_entry_number) {
             importNumberQueryObj.import_entry = import_entry_number
-        }
+        };
 
         if (start_date) {
             startDateQueryObj = {
                 [Op.gte]: startDateObj
                 
             }
-        }
+        };
         
         if (end_date) {
             endDateQueryObj = {
                 [Op.lte]: endDateObj
             }
-        }
+        };
 
         let arriving_date = {arriving_date: {...startDateQueryObj,...endDateQueryObj}}
 

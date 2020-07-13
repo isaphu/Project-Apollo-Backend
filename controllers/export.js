@@ -1,5 +1,6 @@
 const db = require('../models');
 const { response } = require('express');
+const { Op, DATE } = require('sequelize')
 
 exports.createExportData = async (req, res, next) => {
     try {
@@ -58,26 +59,47 @@ exports.getExportData = async (req, res, status) => {
 exports.getAllExportData = async (req, res, next) => {
     try {
         const {
-            export_entry
+            export_entry_number,
+            start_date,
+            end_date
         } = req.query;
+
+        const startDateObj = new Date(start_date);
+        const endDateObj = new Date(end_date);
 
         let defaultQueryObject = {
             attributes: ['id', 'export_entry', 'releasing_date','warehouse_date','export_by','departure_date','invoice_no']
         }
 
         let exportNumberQueryObj = {};
+        let startDateQueryObj = {};
+        let endDateQueryObj = {};
 
-        if (export_entry) {
-            exportNumberQueryObj.export_entry = export_entry
-        }
+        if (export_entry_number) {
+            exportNumberQueryObj.export_entry = export_entry_number
+        };
 
-        let resultQueryObject = {...exportNumberQueryObj}
+        if (start_date) {
+            startDateQueryObj = {
+                [Op.gte]: startDateObj
+            }
+        };
+
+        if (end_date) {
+            endDateQueryObj = {
+                [Op.lte]: endDateObj
+            }
+        };
+
+        let departure_date = {departure_date: {...startDateQueryObj,...endDateQueryObj}}
+
+        let resultQueryObject = {...exportNumberQueryObj,...departure_date}
         let whereObj = {}
 
         let hasKey = false;
 
         for (let key in resultQueryObject) {
-            hasKey == true;
+            hasKey = true;
             break;
         }
 
@@ -86,11 +108,11 @@ exports.getAllExportData = async (req, res, next) => {
         }
 
         const resultQueryObj = {...defaultQueryObject, ...whereObj}
-
-        export_entry = await db.export_entry.findAll(resultQueryObj)
+        const export_entry = await db.export_entry.findAll(resultQueryObj)
         
         res.status(200).send({ export_entry})
     } catch(err) {
+        console.log(err)
         res.status(500).send({ message: err.message })
     }
 };
