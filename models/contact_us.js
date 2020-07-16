@@ -6,12 +6,6 @@ module.exports = (sequelize, DataType) => {
         email: {
             type: DataType.STRING(255)
         },
-        createdAt: {
-            type: DataType.DATE
-        },
-        updatedAt: {
-            type: DataType.DATE
-        }
     })
     return contact_us;
 }

@@ -39,15 +39,9 @@ module.exports = (sequelize, DataType) => {
         create_by: {
             type: DataType.INTEGER 
         },
-        create_date: {
-            type: DataType.DATE
-        },
         update_by: {
             type: DataType.INTEGER
         },
-        update_date: {
-            type: DataType.DATE
-        }
     });
     return company;
 }
