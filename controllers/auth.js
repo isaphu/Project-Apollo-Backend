@@ -12,8 +12,7 @@ exports.login = async (req,res,next) => {
     try {
         const userInfo = await db.user.findOne({ where: { login_name }});
         const isValidUser =
-         userInfo && 
-            bcryptjs.compareSync(password, userInfo.password)
+         userInfo && bcryptjs.compareSync(password, userInfo.password)
         if (!isValidUser) {
            res.status(400).send('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         } else {

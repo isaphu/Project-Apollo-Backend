@@ -11,7 +11,7 @@ exports.listAllUser = (req,res,next) => {
             if (requestUser.isAdmin) {
                 db.user
                 .findAll({ attributes: ['firstname', 'lastname', 'email', 'phone','login_name','password','isAdmin','rehister_complete','status']})
-                .then(result => res.status(200).send({message: 'User Created!'}))
+                .then(result => res.status(200).send({message: 'These are the users!'}))
             } else res.status(401).send({message:'Unauthorize Request!'})
         })
     } catch(err) {
@@ -32,7 +32,7 @@ exports.createUser = (req, res, next) => {
             register_complete,
             status
         } = req.body;
-        db.user.findOne({where: { usernmae: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
+        db.user.findOne({where: { username: jwtDecode(JSON.stringify(req.headers.authorization)).login_name}})
         .then(requestUser =>{
             if (requestUser.isAdmin) {
                 db.user
