@@ -11,13 +11,11 @@ exports.login = async (req,res,next) => {
     } = req.body;
     try {
         const userInfo = await db.user.findOne({ where: { login_name }});
-        const isValidUser =
-         userInfo && 
-         bcryptjs.compare(password, userInfo.password)
+        const isPasswordCorrect = await bcryptjs.compare(password, userInfo.password)
+        const isValidUser =  userInfo && isPasswordCorrect
         if (!isValidUser) {
            res.status(400).send('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         } else {
-            console.log(process.env.JWT_SECRET_KEY)
             res.status(200).send({ 
                 token: jwt.sign({ login_name }, process.env.JWT_SECRET_KEY, { 
                     expiresIn: process.env.JWT_EXPIRE_IN,   
