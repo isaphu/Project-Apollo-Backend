@@ -29,7 +29,7 @@ app.all('*',(req,res,next) => {
   res.status(404).send({ message: 'route not found'})
 })
 
-db.sequelize.sync({force: false }).then(() => {
+db.sequelize.sync({force: false}).then(() => {
     app.listen(8000, () => {
         console.log('server is running at port 8000');
     });
