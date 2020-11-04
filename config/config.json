@@ -1,7 +1,6 @@
 {
   "development": {
     "username": "root",
-    "password": "YLUTJMHGa1",
     "database": "ProjectApollo",
     "host": "127.0.0.1",
     "dialect": "mysql",    
